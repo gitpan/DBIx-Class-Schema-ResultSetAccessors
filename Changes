@@ -1,0 +1,4 @@
+Revision history for Perl module DBIx::Class::Schema::ResultSetAccessors
+
+0.01 Wed Jun  8 10:28:25 2011
+    - original skeleton created with ExtUtils::ModuleMaker::TT
