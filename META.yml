@@ -21,8 +21,11 @@ no_index:
     - t
 requires:
   DBIx::Class: 0
+  Lingua::EN::Inflect::Phrase: 0
+  String::CamelCase: 0
+  Sub::Name: 0
   perl: 5.8.1
 resources:
   license: http://dev.perl.org/licenses/
   repository: git://git.shadowcat.co.uk/dbsrgits/DBIx-Class-Schema-ResultSetAccessors.git
-version: 0.001
+version: 0.001001

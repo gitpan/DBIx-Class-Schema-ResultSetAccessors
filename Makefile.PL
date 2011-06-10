@@ -6,6 +6,9 @@ perl_version 5.008001;
 all_from 'lib/DBIx/Class/Schema/ResultSetAccessors.pm';
 
 requires 'DBIx::Class' => 0;
+requires 'String::CamelCase' => 0;
+requires 'Lingua::EN::Inflect::Phrase' => 0;
+requires 'Sub::Name' => 0;
 
 test_requires 'Test::More' => '0.94';
 test_requires 'Test::Exception';

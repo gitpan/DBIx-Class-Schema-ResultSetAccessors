@@ -7,7 +7,7 @@ use String::CamelCase;
 use Lingua::EN::Inflect::Phrase;
 use Sub::Name 'subname';
 
-our $VERSION = 0.001000;
+our $VERSION = 0.001001;
 
 sub register_source {
     my $self    = shift;
