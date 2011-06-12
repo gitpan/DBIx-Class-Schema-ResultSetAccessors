@@ -30,7 +30,7 @@ METHODS
      # in your MyApp::Schema class
      sub resultset_accessor_map {
         {
-            Source => 'my_source',
+            Source => 'my_sources',
             Artist => 'my_artists',
         }
      }

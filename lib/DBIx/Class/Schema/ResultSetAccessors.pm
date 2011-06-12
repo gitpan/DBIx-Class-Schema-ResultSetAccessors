@@ -7,7 +7,7 @@ use String::CamelCase;
 use Lingua::EN::Inflect::Phrase;
 use Sub::Name 'subname';
 
-our $VERSION = 0.001001;
+our $VERSION = 0.001002;
 
 sub register_source {
     my $self    = shift;
@@ -97,7 +97,7 @@ in your schema class and return a hashref map of Source => accessor names. E.g.:
  # in your MyApp::Schema class
  sub resultset_accessor_map {
     {
-        Source => 'my_source',
+        Source => 'my_sources',
         Artist => 'my_artists',
     }
  }
