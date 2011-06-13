@@ -7,8 +7,9 @@ use DBIx::Class::Carp qw(carp);
 use String::CamelCase;
 use Lingua::EN::Inflect::Phrase;
 use Sub::Name 'subname';
+use namespace::clean;
 
-our $VERSION = 0.001003;
+our $VERSION = 0.001004;
 
 sub register_source {
     my $self    = shift;

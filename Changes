@@ -1,6 +1,6 @@
 Revision history for Perl module DBIx::Class::Schema::ResultSetAccessors
 
-0.03 Mon Jun 13
+0.04 Mon Jun 13
     - Now instead of throwing an error and dying when a resultset accessor with the same name exists
       it simply warns the user.
 
