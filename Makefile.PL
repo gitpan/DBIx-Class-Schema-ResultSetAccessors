@@ -11,7 +11,7 @@ requires 'Lingua::EN::Inflect::Phrase' => 0;
 requires 'Sub::Name' => 0;
 
 test_requires 'Test::More' => '0.94';
-test_requires 'Test::Exception';
+test_requires 'Test::Warn';
 
 if ($Module::Install::AUTHOR) {
     system("pod2text lib/DBIx/Class/Schema/ResultSetAccessors.pm > README");

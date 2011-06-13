@@ -6,7 +6,7 @@ use warnings;
 use lib qw(t/lib);
 
 use Test::More;
-use Test::Exception;
+use Test::Warn;
 
 BEGIN {
     use_ok('MyApp1::Schema');
@@ -24,12 +24,22 @@ isa_ok $schema1->cds, 'MyApp1::Schema::ResultSet::CD'; # custom ResultSet
 can_ok $schema1, qw/source_resultset/;
 isa_ok $schema1->source_resultset, 'DBIx::Class::ResultSet';
 
-throws_ok {
+# test the warnings
+warning_like { warn_same_name() } qr/Schema method with the same name already exists/,
+    'Schema method with the same name already exists';
+
+sub warn_same_name {
     # must use required, because for some reason throws_ok cannot catch
     # erros with "use"
     require MyApp2::Schema;
-    MyApp2::Schema->connect('dbi:SQLite:dbname=:memory:', '', '');
-} qr/Schema method with the same name already exists/,
-    'Schema method with the same name already exists';
+    
+    # eval'ing this, otherwise an odd error is thrown
+    # "Can't call method "_count_select" on an undefined value"
+    # I presume it's due to the store not having the actual schema installed
+    # as we are connecting to an empty database
+    eval {
+        my $schema = MyApp2::Schema->connect('dbi:SQLite:dbname=:memory:', '', '');
+    };
+}
 
 done_testing;

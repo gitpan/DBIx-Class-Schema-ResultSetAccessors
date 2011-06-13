@@ -3,11 +3,12 @@ package DBIx::Class::Schema::ResultSetAccessors;
 use strict;
 use warnings;
 
+use DBIx::Class::Carp qw(carp);
 use String::CamelCase;
 use Lingua::EN::Inflect::Phrase;
 use Sub::Name 'subname';
 
-our $VERSION = 0.001002;
+our $VERSION = 0.001003;
 
 sub register_source {
     my $self    = shift;
@@ -21,7 +22,7 @@ sub register_source {
              : $self->resultset_accessor_name($moniker);
 
     if ($schema->can($accessor_name)) {
-        $self->throw_exception(
+        carp(
             "Can't create ResultSet accessor '$accessor_name'. " .
             "Schema method with the same name already exists. " .
             "Try overloading the name via resultset_accessor_map."

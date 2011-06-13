@@ -4,8 +4,8 @@ author:
   - 'Roman F.'
 build_requires:
   ExtUtils::MakeMaker: 6.42
-  Test::Exception: 0
   Test::More: 0.94
+  Test::Warn: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.42
 distribution_type: module
@@ -28,4 +28,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: git://git.shadowcat.co.uk/dbsrgits/DBIx-Class-Schema-ResultSetAccessors.git
-version: 0.001002
+version: 0.001003
