@@ -3,19 +3,34 @@ package DBIx::Class::Schema::ResultSetAccessors;
 use strict;
 use warnings;
 
+use base 'DBIx::Class::AccessorGroup';
+
 use DBIx::Class::Carp qw(carp);
 use String::CamelCase;
 use Lingua::EN::Inflect::Phrase;
 use Sub::Name 'subname';
 use namespace::clean;
 
-our $VERSION = 0.001004;
+our $VERSION = 0.001005;
+
+__PACKAGE__->mk_group_accessors(inherited => qw/
+    resultset_accessor_map
+    _track_resultset_accessors
+/);
+__PACKAGE__->resultset_accessor_map({});
+__PACKAGE__->_track_resultset_accessors({});
 
 sub register_source {
     my $self    = shift;
     my $moniker = $_[0];
     my $next    = $self->next::method(@_);
     my $schema  = ref($self) || $self;
+
+    # need to track if we already ran register_source once, because
+    # it might be re-run in sub-class, like in the case of
+    # Catalyst::Model::DBIC::Schema via compose_namespaces
+    return $next if
+        exists $self->_track_resultset_accessors->{$schema}{$moniker};
 
     my $accessor_name =
         exists $self->resultset_accessor_map->{$moniker}
@@ -36,12 +51,10 @@ sub register_source {
         *{"${schema}::${accessor_name}"} = subname "${schema}::${accessor_name}"
             => sub { shift->resultset($moniker) };
     }
-    
-    return $next;
-}
 
-sub resultset_accessor_map {
-    {}
+    $self->_track_resultset_accessors->{$schema}{$moniker} = 1;
+
+    return $next;
 }
 
 sub resultset_accessor_name {
@@ -69,14 +82,20 @@ DBIx::Class::Schema::ResultSetAccessors - Short hand ResultSet Accessors
 
 =head1 SYNOPSIS
 
+  # in your schema class
+  __PACKAGE__->load_components(qw/
+      Schema::ResultSetAccessors
+  /);
+  __PACKAGE__->load_namespaces;
+
+  # in your program
   use MyApp::Schema;
   my $schema = MyApp::Schema->connect(...);
-  
   @artists = $schema->artists->all; # same as $schema->resultset('Artist')->all;
 
 =head1 DESCRIPTION
 
-Creates short hand accessor methods for each ResultSet. Accessor names are 
+Creates short hand accessor methods for each ResultSet. Accessor names are
 properly converted into lowercase and pluralized. E.g.
 
  LinerNote -> liner_notes
@@ -103,9 +122,9 @@ in your schema class and return a hashref map of Source => accessor names. E.g.:
         Artist => 'my_artists',
     }
  }
- 
+
  # later in your code
- $schema->my_source->all;
+ $schema->my_sources->all;
 
 =head2 resultset_accessor_name($moniker)
 

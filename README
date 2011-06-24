@@ -2,9 +2,15 @@ NAME
     DBIx::Class::Schema::ResultSetAccessors - Short hand ResultSet Accessors
 
 SYNOPSIS
+      # in your schema class
+      __PACKAGE__->load_components(qw/
+          Schema::ResultSetAccessors
+      /);
+      __PACKAGE__->load_namespaces;
+
+      # in your program
       use MyApp::Schema;
       my $schema = MyApp::Schema->connect(...);
-  
       @artists = $schema->artists->all; # same as $schema->resultset('Artist')->all;
 
 DESCRIPTION
@@ -34,9 +40,9 @@ METHODS
             Artist => 'my_artists',
         }
      }
- 
+
      # later in your code
-     $schema->my_source->all;
+     $schema->my_sources->all;
 
   resultset_accessor_name($moniker)
     This method is used to generate the accessor names. If you wish to
